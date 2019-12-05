@@ -1,0 +1,24 @@
+{
+  "name": "hls-ffmpeg-node-mp4-m3u8",
+  "version": "1.0.0",
+  "description": "#### Application is javascript running in node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andyinthemachine/hls-ffmpeg-node-mp4-m3u8.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andyinthemachine/hls-ffmpeg-node-mp4-m3u8/issues"
+  },
+  "homepage": "https://github.com/andyinthemachine/hls-ffmpeg-node-mp4-m3u8#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "fluent-ffmpeg": "^2.1.2"
+  }
+}
