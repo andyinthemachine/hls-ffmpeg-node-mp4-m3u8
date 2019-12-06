@@ -7,7 +7,7 @@
 
 ### **hls-ffmpeg-node-mp4-m3u8 app**
 
-#### Application is javascript running in node.js 
+#### Application is node.js 
 
 #### converts .mp4 to hls master manifest .m3u8
 
