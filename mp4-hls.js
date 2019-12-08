@@ -37,14 +37,29 @@ ffmpeg.ffprobe(input_file, function (err, metadata) {
 // ffmpeg -y -i Alex_SL.mp4 -hls_time 6 -hls_segment_filename "fileSequence%d.ts" -hls_playlist_type vod prog_index.m3u8
 
 
+// ffmpeg(input_file)
+//   .outputOptions(
+//     '-hls_time', '6',
+//     '-hls_segment_filename', 'fileSequenced%d.ts',
+//     '-hls_playlist_type', 'vod',
+//   )
+//   .output("prog_index.m3u8")
+//   .on('start', function (commandLine) {
+//     console.log('Spawned ffmpeg with command: ' + commandLine);
+//   })
+//   .on('error', function (err) {
+//     console.log('An error occurred: ' + err.message);
+//   })
+//   .on('end', function () {
+//     console.log('Processing finished !');
+//   })
+//   .run();
 
 ffmpeg(input_file)
   .outputOptions(
-    '-hls_time', '6',
-    '-hls_segment_filename', 'fileSequenced%d.ts',
-    '-hls_playlist_type', 'vod',
+    '-vf', 'scale=w=200:h=320:force_original_aspect_ratio=decrease'
   )
-  .output("prog_index.m3u8")
+  .output("temp.mp4")
   .on('start', function (commandLine) {
     console.log('Spawned ffmpeg with command: ' + commandLine);
   })
