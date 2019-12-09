@@ -9,7 +9,7 @@
 
 #### Author: Andrew Ulrich 
 
-#### Application is node.js 
+#### Script is node.js 
 
 ### Transcodes input video (.mp4) to HLS multi-bitrate assets and master manifest 
 
