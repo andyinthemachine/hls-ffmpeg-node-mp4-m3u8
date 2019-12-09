@@ -135,6 +135,11 @@ if (input_file) {
       '-hls_segment_filename', `${base_video_name}/hls-${base_video_name}-432p-1100br-%03d.ts`,
       '-hls_playlist_type', 'vod',
     )
+    //master playlist
+    // .output(`${base_video_name}/hls-${base_video_name}-43.m3u8`)
+    .outputOptions(
+      '-hls_master_pl_name', `${base_video_name}/hls-${base_video_name}-master.m3u8`,
+    )
     .on('start', function (commandLine) {
       console.log('Spawned ffmpeg with command: ' + commandLine);
     })
