@@ -74,7 +74,7 @@ if (input_file) {
     )
     // bitrate res_w res_h  maxrate bufsize
     // (3000, 1280, 720, 3210, 4500);
-    .output(`${base_video_name}/hls-${base_video_name}-1280p-3000br.m3u8`)
+    .output(`${base_video_name}/hls-${base_video_name}-720p-3000br.m3u8`)
     .outputOptions(
       '-vf', 'scale=w=1280:h=720',
       '-c:a', 'aac',
@@ -90,14 +90,14 @@ if (input_file) {
       '-maxrate', '3210k',
       '-bufsize', '4500k',
       '-hls_time', '6',
-      '-hls_segment_filename', `${base_video_name}/hls-${base_video_name}-1280p-3000br-%03d.ts`,
+      '-hls_segment_filename', `${base_video_name}/hls-${base_video_name}-720p-3000br-%03d.ts`,
       '-hls_playlist_type', 'vod',
     )
     // bitrate res_w res_h  maxrate bufsize
     // (2000, 960, 540, 2140, 3000);
-    .output(`${base_video_name}/hls-${base_video_name}-1080p-6000br.m3u8`)
+    .output(`${base_video_name}/hls-${base_video_name}-540p-2000br.m3u8`)
     .outputOptions(
-      '-vf', 'scale=w=1920:h=1080',
+      '-vf', 'scale=w=960:h=540',
       '-c:a', 'aac',
       '-ar', '48000',
       '-b:a', '128k',
@@ -107,18 +107,18 @@ if (input_file) {
       '-g', '48',
       '-keyint_min', '48',
       '-sc_threshold', '0',
-      '-b:v', '6000k',
-      '-maxrate', '6420k',
-      '-bufsize', '9000k',
+      '-b:v', '2000k',
+      '-maxrate', '2140k',
+      '-bufsize', '3000k',
       '-hls_time', '6',
-      '-hls_segment_filename', `${base_video_name}/hls-${base_video_name}-1080p-6000br-%03d.ts`,
+      '-hls_segment_filename', `${base_video_name}/hls-${base_video_name}-540p-2000br-%03d.ts`,
       '-hls_playlist_type', 'vod',
     )
     // bitrate res_w res_h  maxrate bufsize
     // (1100, 768, 432, 1176, 1650);
-    .output(`${base_video_name}/hls-${base_video_name}-1080p-6000br.m3u8`)
+    .output(`${base_video_name}/hls-${base_video_name}-432p-1100br.m3u8`)
     .outputOptions(
-      '-vf', 'scale=w=1920:h=1080',
+      '-vf', 'scale=w=768:h=432',
       '-c:a', 'aac',
       '-ar', '48000',
       '-b:a', '128k',
@@ -128,11 +128,11 @@ if (input_file) {
       '-g', '48',
       '-keyint_min', '48',
       '-sc_threshold', '0',
-      '-b:v', '6000k',
-      '-maxrate', '6420k',
-      '-bufsize', '9000k',
+      '-b:v', '1100k',
+      '-maxrate', '1176k',
+      '-bufsize', '1650k',
       '-hls_time', '6',
-      '-hls_segment_filename', `${base_video_name}/hls-${base_video_name}-1080p-6000br-%03d.ts`,
+      '-hls_segment_filename', `${base_video_name}/hls-${base_video_name}-432p-1100br-%03d.ts`,
       '-hls_playlist_type', 'vod',
     )
     .on('start', function (commandLine) {
