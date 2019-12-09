@@ -8,13 +8,15 @@ var ffmpeg = require('fluent-ffmpeg');
 var ffprobe = require('fluent-ffmpeg');
 
 const input_file = process.argv[2];
+const segment_len = process.argv[3];
 const base_video_name = path.basename(input_file, '.mp4');
 
 new_line = () => console.log("\n");
 
 
+
 // create sub-directory for assets
-if (input_file) {
+if ((input_file) && (segment_len === '5' || segment_len === '6')) {
   try {
     if (!fs.existsSync(base_video_name)) {
       fs.mkdirSync(base_video_name)
@@ -41,7 +43,8 @@ if (input_file) {
       '-b:v', '6000k',
       '-maxrate', '6420k',
       '-bufsize', '9000k',
-      '-hls_time', '6',
+      '-hls_init_time', '9',
+      '-hls_time', segment_len,
       '-hls_flags', 'single_file',
       '-hls_playlist_type', 'vod',
     )
@@ -62,7 +65,8 @@ if (input_file) {
       '-b:v', '4500k',
       '-maxrate', '4814k',
       '-bufsize', '6750k',
-      '-hls_time', '6',
+      '-hls_init_time', '9',
+      '-hls_time', segment_len,
       '-hls_flags', 'single_file',
       '-hls_playlist_type', 'vod',
     )
@@ -83,7 +87,8 @@ if (input_file) {
       '-b:v', '3000k',
       '-maxrate', '3210k',
       '-bufsize', '4500k',
-      '-hls_time', '6',
+      '-hls_init_time', '9',
+      '-hls_time', segment_len,
       '-hls_flags', 'single_file',
       '-hls_playlist_type', 'vod',
     )
@@ -104,7 +109,8 @@ if (input_file) {
       '-b:v', '2000k',
       '-maxrate', '2140k',
       '-bufsize', '3000k',
-      '-hls_time', '6',
+      '-hls_init_time', '9',
+      '-hls_time', segment_len,
       '-hls_flags', 'single_file',
       '-hls_playlist_type', 'vod',
     )
@@ -125,10 +131,12 @@ if (input_file) {
       '-b:v', '1100k',
       '-maxrate', '1176k',
       '-bufsize', '1650k',
-      '-hls_time', '6',
+      '-hls_init_time', '9',
+      '-hls_time', segment_len,
       '-hls_flags', 'single_file',
       '-hls_playlist_type', 'vod',
     )
+
     .on('start', function (commandLine) {
       console.log('Spawned ffmpeg with command: ' + commandLine);
     })
@@ -137,49 +145,62 @@ if (input_file) {
       return (false);
     })
     .on('end', function () {
-      console.log('Processing finished !');
+
+      console.log('Processing finished');
+
+      let master_playlist_str = '#EXTM3U\n#EXT-X-VERSION:4\n';
+
+      master_playlist_str += '#EXT-X-STREAM-INF:AVERAGE-BANDWIDTH=1100000,BANDWIDTH=1176000,FRAME-RATE=24,CODECS="avc1.640028",RESOLUTION=768x432\n';
+      master_playlist_str += `hls-${base_video_name}-432p-1100br.m3u8\n`
+
+      master_playlist_str += '#EXT-X-STREAM-INF:AVERAGE-BANDWIDTH=2000000,BANDWIDTH=2140000,FRAME-RATE=24,CODECS="avc1.640028",RESOLUTION=960x540\n';
+      master_playlist_str += `hls-${base_video_name}-540p-2000br.m3u8\n`
+
+      master_playlist_str += '#EXT-X-STREAM-INF:AVERAGE-BANDWIDTH=3000000,BANDWIDTH=3210000,FRAME-RATE=24,CODECS="avc1.640028",RESOLUTION=1280x720\n';
+      master_playlist_str += `hls-${base_video_name}-720p-3000br.m3u8\n`
+
+      master_playlist_str += '#EXT-X-STREAM-INF:AVERAGE-BANDWIDTH=4500000,BANDWIDTH=4814000,FRAME-RATE=24,CODECS="avc1.640028",RESOLUTION=1280x720\n';
+      master_playlist_str += `hls-${base_video_name}-720p-4500br.m3u8\n`
+
+      master_playlist_str += '#EXT-X-STREAM-INF:AVERAGE-BANDWIDTH=6000000,BANDWIDTH=6420000,FRAME-RATE=24,CODECS="avc1.640028",RESOLUTION=1920x1080\n';
+      master_playlist_str += `hls-${base_video_name}-1080p-6000br.m3u8\n`
+
+      fs.writeFile(`${base_video_name}/${base_video_name}-master.m3u8`, master_playlist_str, function (err) {
+        if (err) throw err;
+        console.log('Master file created');
+        new_line();
+      });
       return (true);
     })
     .run();
 }
-else
-  console.log("no file specified");
+else {
+  console.log("Please specify input file and and segment length of 5/6 seconds");
+  console.log("eg: node mp4-hls tos-teaser 6 <ret>");
+}
 
 new_line();
 
-ffmpeg.ffprobe(input_file, function (err, metadata) {
-  if (err) return console.log(err);
-  // console.dir(metadata);
-});
-
-let master_playlist_str = '#EXTM3U\n#EXT-X-VERSION:4\n';
-
-master_playlist_str += '#EXT-X-STREAM-INF:PROGRAM-ID=1:BANDWIDTH=1100000,RESOLUTION=768x432\n';
-master_playlist_str += `hls-${base_video_name}-432p-1100br.m3u8\n`
-
-master_playlist_str += '#EXT-X-STREAM-INF:PROGRAM-ID=1BANDWIDTH=2000000,RESOLUTION=960x540\n';
-master_playlist_str += `hls-${base_video_name}-540p-2000br.m3u8\n`
-
-master_playlist_str += '#EXT-X-STREAM-INF:PROGRAM-ID=1BANDWIDTH=3000000,RESOLUTION=1280x720\n';
-master_playlist_str += `hls-${base_video_name}-720p-3000br.m3u8\n`
-
-master_playlist_str += '#EXT-X-STREAM-INF:PROGRAM-ID=1BANDWIDTH=4500000,RESOLUTION=1280x720\n';
-master_playlist_str += `hls-${base_video_name}-720p-4500br.m3u8\n`
-
-master_playlist_str += '#EXT-X-STREAM-INF:PROGRAM-ID=1BANDWIDTH=6000000,RESOLUTION=1920x1080\n';
-master_playlist_str += `hls-${base_video_name}-1080p-6000br.m3u8\n`
-
-fs.writeFile(`${base_video_name}/${base_video_name}-master.m3u8`, master_playlist_str, function (err) {
-  if (err) throw err;
-  console.log('Master file created');
-  new_line();
-});
 
 
 
+// ffmpeg.ffprobe(input_file, function (err, metadata) {
+//   if (err) return console.log(err);
+//    console.dir(metadata);
+// });
+
+// master_playlist_str += '#EXT-X-MEDIA:TYPE=AUDIO,AUTOSELECT=NO,DEFAULT=NO\n';
+// master_playlist_str += `hls-${base_video_name}-audio.m3u8\n`
 
 
-
+  // extract audio to separate track
+    // .output(`${base_video_name}/hls-${base_video_name}-audio.m3u8`)
+    // .noVideo()
+    // .outputOptions(
+    //   '-hls_time', '6',
+    //   '-hls_flags', 'single_file'
+    //   '-hls_playlist_type', 'vod',
+    // )
 
 
 
