@@ -19,7 +19,7 @@
 
 ##### Bit rates: 6000k/1920x1080  4500k/1280x720  3000k/1280/720  2000k/906x540  1100k/768x432
 
-#### CLI:  node mp4-hls <inputfile>  eg: node mp4-hls tos-teaser.mp4
+#### CLI:  node mp4-hls (filename.mp4)  eg: node mp4-hls tos-teaser.mp4
 
 ##### Looks for input video in current app directory
 
