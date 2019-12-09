@@ -11,6 +11,7 @@ const base_video_name = path.basename(input_file, '.mp4');
 new_line = () => console.log("\n");
 
 
+// create sub-directory for assets
 
 if (input_file) {
   try {
@@ -29,10 +30,10 @@ if (input_file) {
   // (1100, 768, 432, 1176, 1650);
 
   ffmpeg(input_file)
-
+    // bitrate res_w res_h  maxrate bufsize
+    // (6000, 1920, 1080, 6420, 9000);
     .output(`${base_video_name}/hls-${base_video_name}-1080p-6000br.m3u8`)
     .outputOptions(
-      // '-vf', 'scale=w=1920:h=1080:force_original_aspect_ratio=decrease',
       '-vf', 'scale=w=1920:h=1080',
       '-c:a', 'aac',
       '-ar', '48000',
@@ -50,10 +51,31 @@ if (input_file) {
       '-hls_segment_filename', `${base_video_name}/hls-${base_video_name}-1080p-6000br-%03d.ts`,
       '-hls_playlist_type', 'vod',
     )
-
+    // bitrate res_w res_h  maxrate bufsize
+    // (4500, 1280, 720, 4814, 6750);
+    .output(`${base_video_name}/hls-${base_video_name}-720p-4500br.m3u8`)
+    .outputOptions(
+      '-vf', 'scale=w=1280:h=720',
+      '-c:a', 'aac',
+      '-ar', '48000',
+      '-b:a', '128k',
+      '-c:v', 'h264',
+      '-profile:v', 'main',
+      '-crf', '20',
+      '-g', '48',
+      '-keyint_min', '48',
+      '-sc_threshold', '0',
+      '-b:v', '4500k',
+      '-maxrate', '4814k',
+      '-bufsize', '6750k',
+      '-hls_time', '6',
+      '-hls_segment_filename', `${base_video_name}/hls-${base_video_name}-720p-4500br-%03d.ts`,
+      '-hls_playlist_type', 'vod',
+    )
+    // bitrate res_w res_h  maxrate bufsize
+    // (3000, 1280, 720, 3210, 4500);
     .output(`${base_video_name}/hls-${base_video_name}-1280p-3000br.m3u8`)
     .outputOptions(
-      // '-vf', 'scale=w=1280:h=720:force_original_aspect_ratio=decrease',
       '-vf', 'scale=w=1280:h=720',
       '-c:a', 'aac',
       '-ar', '48000',
@@ -71,7 +93,48 @@ if (input_file) {
       '-hls_segment_filename', `${base_video_name}/hls-${base_video_name}-1280p-3000br-%03d.ts`,
       '-hls_playlist_type', 'vod',
     )
-
+    // bitrate res_w res_h  maxrate bufsize
+    // (2000, 960, 540, 2140, 3000);
+    .output(`${base_video_name}/hls-${base_video_name}-1080p-6000br.m3u8`)
+    .outputOptions(
+      '-vf', 'scale=w=1920:h=1080',
+      '-c:a', 'aac',
+      '-ar', '48000',
+      '-b:a', '128k',
+      '-c:v', 'h264',
+      '-profile:v', 'main',
+      '-crf', '20',
+      '-g', '48',
+      '-keyint_min', '48',
+      '-sc_threshold', '0',
+      '-b:v', '6000k',
+      '-maxrate', '6420k',
+      '-bufsize', '9000k',
+      '-hls_time', '6',
+      '-hls_segment_filename', `${base_video_name}/hls-${base_video_name}-1080p-6000br-%03d.ts`,
+      '-hls_playlist_type', 'vod',
+    )
+    // bitrate res_w res_h  maxrate bufsize
+    // (1100, 768, 432, 1176, 1650);
+    .output(`${base_video_name}/hls-${base_video_name}-1080p-6000br.m3u8`)
+    .outputOptions(
+      '-vf', 'scale=w=1920:h=1080',
+      '-c:a', 'aac',
+      '-ar', '48000',
+      '-b:a', '128k',
+      '-c:v', 'h264',
+      '-profile:v', 'main',
+      '-crf', '20',
+      '-g', '48',
+      '-keyint_min', '48',
+      '-sc_threshold', '0',
+      '-b:v', '6000k',
+      '-maxrate', '6420k',
+      '-bufsize', '9000k',
+      '-hls_time', '6',
+      '-hls_segment_filename', `${base_video_name}/hls-${base_video_name}-1080p-6000br-%03d.ts`,
+      '-hls_playlist_type', 'vod',
+    )
     .on('start', function (commandLine) {
       console.log('Spawned ffmpeg with command: ' + commandLine);
     })
