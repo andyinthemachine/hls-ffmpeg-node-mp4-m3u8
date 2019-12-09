@@ -5,7 +5,7 @@
 
 
 
-### **hls-ffmpeg-node-mp4-m3u8 Application**
+### Application: hls-ffmpeg-node-mp4-m3u8 
 
 #### Author: Andrew Ulrich 
 
