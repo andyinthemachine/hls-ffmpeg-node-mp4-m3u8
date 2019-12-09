@@ -9,9 +9,9 @@
 
 #### Application is node.js 
 
-#### converts input video .mp4 to HLS multi bitrate master manifest .m3u8
+#### transcodes input video .mp4 to HLS multi bitrate master manifest .m3u8
 
-#### npm links to libraries ffmpeg, fs
+#### links to node libraries ffmpeg, fs
 
 ### CLI  mp4-hls <inputfile>
 
