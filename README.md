@@ -7,6 +7,8 @@
 
 ### **hls-ffmpeg-node-mp4-m3u8 app**
 
+#### Author: Andrew Ulrich 
+
 #### Application is node.js 
 
 ### Transcodes input video (.mp4) to HLS multi-bitrate assets and master manifest 
