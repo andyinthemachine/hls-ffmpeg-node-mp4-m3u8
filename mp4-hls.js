@@ -38,7 +38,7 @@ if ((input_file) && ((parseInt(segment_len) > 0) && (parseInt(segment_len) <= 30
     // (6000, 1920, 1080, 6420, 9000);
     .output(`${base_video_name}/hls-${base_video_name}-1080p-6000br.m3u8`)
     .outputOptions(
-      '-vf', 'scale=w=1920:h=1080',
+      '-vf', 'scale=1920:h=1080:force_original_aspect_ratio=decrease',
       '-c:a', 'aac',
       '-ar', '48000',
       '-b:a', '128k',
@@ -57,10 +57,10 @@ if ((input_file) && ((parseInt(segment_len) > 0) && (parseInt(segment_len) <= 30
       '-hls_playlist_type', 'vod'
     )
     // bitrate res_w res_h  maxrate bufsize
-    // (4500, 1280, 720, 4814, 6750);
+    // (4500, 1728, 720, 4814, 6750);
     .output(`${base_video_name}/hls-${base_video_name}-720p-4500br.m3u8`)
     .outputOptions(
-      '-vf', 'scale=w=1280:h=720',
+      '-vf', 'scale=1728:h=720',
       '-c:a', 'aac',
       '-ar', '48000',
       '-b:a', '128k',
@@ -79,10 +79,10 @@ if ((input_file) && ((parseInt(segment_len) > 0) && (parseInt(segment_len) <= 30
       '-hls_playlist_type', 'vod'
     )
     // bitrate res_w res_h  maxrate bufsize
-    // (3000, 1280, 720, 3210, 4500);
+    // (3000, 1728, 720, 3210, 4500);
     .output(`${base_video_name}/hls-${base_video_name}-720p-3000br.m3u8`)
     .outputOptions(
-      '-vf', 'scale=w=1280:h=720',
+      '-vf', 'scale=w=1728:h=720',
       '-c:a', 'aac',
       '-ar', '48000',
       '-b:a', '128k',
@@ -101,10 +101,10 @@ if ((input_file) && ((parseInt(segment_len) > 0) && (parseInt(segment_len) <= 30
       '-hls_playlist_type', 'vod'
     )
     // bitrate res_w res_h  maxrate bufsize
-    // (2000, 960, 540, 2140, 3000);
+    // (2000, 1296, 540, 2140, 3000);
     .output(`${base_video_name}/hls-${base_video_name}-540p-2000br.m3u8`)
     .outputOptions(
-      '-vf', 'scale=w=960:h=540',
+      '-vf', 'scale=w=1296:h=540',
       '-c:a', 'aac',
       '-ar', '48000',
       '-b:a', '128k',
@@ -123,10 +123,10 @@ if ((input_file) && ((parseInt(segment_len) > 0) && (parseInt(segment_len) <= 30
       '-hls_playlist_type', 'vod'
     )
     // bitrate res_w res_h  maxrate bufsize
-    // (1100, 768, 432, 1176, 1650);
-    .output(`${base_video_name}/hls-${base_video_name}-432p-1100br.m3u8`)
+    // (1100, 1032, 430, 1176, 1650);
+    .output(`${base_video_name}/hls-${base_video_name}-430p-1100br.m3u8`)
     .outputOptions(
-      '-vf', 'scale=w=768:h=432',
+      '-vf', 'scale=w=1032:h=430',
       '-c:a', 'aac',
       '-ar', '48000',
       '-b:a', '128k',
@@ -158,16 +158,16 @@ if ((input_file) && ((parseInt(segment_len) > 0) && (parseInt(segment_len) <= 30
 
       let master_playlist_str = '#EXTM3U\n#EXT-X-VERSION:4\n';
 
-      master_playlist_str += '#EXT-X-STREAM-INF:AVERAGE-BANDWIDTH=1100000,BANDWIDTH=1176000,FRAME-RATE=24,CODECS="avc1.640028",RESOLUTION=768x432\n';
+      master_playlist_str += '#EXT-X-STREAM-INF:AVERAGE-BANDWIDTH=1100000,BANDWIDTH=1176000,FRAME-RATE=24,CODECS="avc1.640028",RESOLUTION=1032x430\n';
       master_playlist_str += `hls-${base_video_name}-432p-1100br.m3u8\n`
 
-      master_playlist_str += '#EXT-X-STREAM-INF:AVERAGE-BANDWIDTH=2000000,BANDWIDTH=2140000,FRAME-RATE=24,CODECS="avc1.640028",RESOLUTION=960x540\n';
+      master_playlist_str += '#EXT-X-STREAM-INF:AVERAGE-BANDWIDTH=2000000,BANDWIDTH=2140000,FRAME-RATE=24,CODECS="avc1.640028",RESOLUTION=1296x540\n';
       master_playlist_str += `hls-${base_video_name}-540p-2000br.m3u8\n`
 
-      master_playlist_str += '#EXT-X-STREAM-INF:AVERAGE-BANDWIDTH=3000000,BANDWIDTH=3210000,FRAME-RATE=24,CODECS="avc1.640028",RESOLUTION=1280x720\n';
+      master_playlist_str += '#EXT-X-STREAM-INF:AVERAGE-BANDWIDTH=3000000,BANDWIDTH=3210000,FRAME-RATE=24,CODECS="avc1.640028",RESOLUTION=1728x720\n';
       master_playlist_str += `hls-${base_video_name}-720p-3000br.m3u8\n`
 
-      master_playlist_str += '#EXT-X-STREAM-INF:AVERAGE-BANDWIDTH=4500000,BANDWIDTH=4814000,FRAME-RATE=24,CODECS="avc1.640028",RESOLUTION=1280x720\n';
+      master_playlist_str += '#EXT-X-STREAM-INF:AVERAGE-BANDWIDTH=4500000,BANDWIDTH=4814000,FRAME-RATE=24,CODECS="avc1.640028",RESOLUTION=1728x720\n';
       master_playlist_str += `hls-${base_video_name}-720p-4500br.m3u8\n`
 
       master_playlist_str += '#EXT-X-STREAM-INF:AVERAGE-BANDWIDTH=6000000,BANDWIDTH=6420000,FRAME-RATE=24,CODECS="avc1.640028",RESOLUTION=1920x1080\n';
