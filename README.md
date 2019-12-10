@@ -21,7 +21,7 @@
 
 #####  (Script ensures no segment less than provided segment length)
 
-##### Bit rates: 6000k/1080p  4500k/720p  3000k/720p  2000k/540p  1100k/432p
+##### Bitrates: 6000k/1080p  4500k/720p  3000k/720p  2000k/540p  1100k/432p
 
 #### CLI:  node mp4-hls (filename.mp4) (segment length 1-30 seconds)   eg: node mp4-hls tos-teaser.mp4 6
 
