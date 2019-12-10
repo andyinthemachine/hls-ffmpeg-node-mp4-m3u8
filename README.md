@@ -25,9 +25,9 @@
 
 #### CLI:  node mp4-hls (filename.mp4) (segment length 1-30 seconds)   eg: node mp4-hls tos-teaser.mp4 6
 
-##### Looks for input video in current app directory
+##### Looks for input video in current app root directory
 
-##### Creates sub-directory underneath current with base name of video for created files
+##### Creates sub-directory underneath app root with base name of video for created files
 
 ##### Files created: .ts and .m3u8 for each bitrate, and master.m3u8
 
