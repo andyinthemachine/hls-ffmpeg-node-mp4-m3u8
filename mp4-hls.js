@@ -14,7 +14,7 @@ const base_video_name = path.basename(input_file, '.mp4');
 new_line = () => console.log("\n");
 
 
-if ((input_file) && ((parseInt(segment_len) > 0) && (parseInt(segment_len) <= 30))) {
+if ((input_file) && ((parseInt(segment_len) > 1) && (parseInt(segment_len) <= 30))) {
 
   ffmpeg.ffprobe(input_file, function (err, metadata) {
     if (err) return console.log(err);
@@ -32,6 +32,7 @@ if ((input_file) && ((parseInt(segment_len) > 0) && (parseInt(segment_len) <= 30
     console.error(err);
     return (false);
   }
+  new_line();
 
   ffmpeg(input_file)
     // bitrate res_w res_h  maxrate bufsize
@@ -144,9 +145,18 @@ if ((input_file) && ((parseInt(segment_len) > 0) && (parseInt(segment_len) <= 30
       '-hls_flags', 'single_file',
       '-hls_playlist_type', 'vod'
     )
+    // extract audio to separate track
+    .output(`${base_video_name}/hls-${base_video_name}-audio.m3u8`)
+    .noVideo()
+    .outputOptions(
+      '-hls_init_time', init_segment_len,
+      '-hls_time', segment_len,
+      '-hls_flags', 'single_file',
+      '-hls_playlist_type', 'vod',
+    )
 
     .on('start', function (commandLine) {
-      console.log('Spawned ffmpeg with command: ' + commandLine);
+      console.log('Spawned ffmpeg with command: \n' + commandLine);
     })
     .on('error', function (err) {
       console.log('An error occurred: ' + err.message);
@@ -154,9 +164,13 @@ if ((input_file) && ((parseInt(segment_len) > 0) && (parseInt(segment_len) <= 30
     })
     .on('end', function () {
 
+      new_line();
       console.log('Processing finished');
+      console.log('Audio extracted');
 
       let master_playlist_str = '#EXTM3U\n#EXT-X-VERSION:4\n';
+
+      master_playlist_str += `#EXT-X-MEDIA:TYPE=AUDIO,GROUP-ID="audio",NAME="English",AUTOSELECT=NO,DEFAULT=NO,URI="hls-${base_video_name}-audio.m3u8"\n`;
 
       master_playlist_str += '#EXT-X-STREAM-INF:AVERAGE-BANDWIDTH=1100000,BANDWIDTH=1176000,FRAME-RATE=24,CODECS="avc1.640028",RESOLUTION=1032x430\n';
       master_playlist_str += `hls-${base_video_name}-432p-1100br.m3u8\n`
@@ -188,7 +202,6 @@ else {
   console.log("eg: node mp4-hls tos-teaser 6 <ret>");
 }
 
-new_line();
 
 
 
