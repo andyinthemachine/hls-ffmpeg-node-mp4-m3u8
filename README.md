@@ -19,7 +19,7 @@
 
 #####  Provide segment length (1-30 sec) in second command line parameter.
 
-#####  (Script ensures no segment less than provied segment length)
+#####  (Script ensures no segment less than provided segment length)
 
 ##### Bit rates: 6000k/1920x1080  4500k/1280x720  3000k/1280/720  2000k/906x540  1100k/768x432
 
