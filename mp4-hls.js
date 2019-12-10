@@ -51,7 +51,7 @@ if ((input_file) && ((parseInt(segment_len) > 0) && (parseInt(segment_len) <= 30
       '-b:v', '6000k',
       '-maxrate', '6420k',
       '-bufsize', '9000k',
-      '-hls_init_time', '9',
+      '-hls_init_time', init_segment_len,
       '-hls_time', segment_len,
       '-hls_flags', 'single_file',
       '-hls_playlist_type', 'vod'
@@ -73,7 +73,7 @@ if ((input_file) && ((parseInt(segment_len) > 0) && (parseInt(segment_len) <= 30
       '-b:v', '4500k',
       '-maxrate', '4814k',
       '-bufsize', '6750k',
-      '-hls_init_time', '9',
+      '-hls_init_time', init_segment_len,
       '-hls_time', segment_len,
       '-hls_flags', 'single_file',
       '-hls_playlist_type', 'vod'
@@ -95,7 +95,7 @@ if ((input_file) && ((parseInt(segment_len) > 0) && (parseInt(segment_len) <= 30
       '-b:v', '3000k',
       '-maxrate', '3210k',
       '-bufsize', '4500k',
-      '-hls_init_time', '9',
+      '-hls_init_time', init_segment_len,
       '-hls_time', segment_len,
       '-hls_flags', 'single_file',
       '-hls_playlist_type', 'vod'
@@ -117,7 +117,7 @@ if ((input_file) && ((parseInt(segment_len) > 0) && (parseInt(segment_len) <= 30
       '-b:v', '2000k',
       '-maxrate', '2140k',
       '-bufsize', '3000k',
-      '-hls_init_time', '9',
+      '-hls_init_time', init_segment_len,
       '-hls_time', segment_len,
       '-hls_flags', 'single_file',
       '-hls_playlist_type', 'vod'
@@ -139,7 +139,7 @@ if ((input_file) && ((parseInt(segment_len) > 0) && (parseInt(segment_len) <= 30
       '-b:v', '1100k',
       '-maxrate', '1176k',
       '-bufsize', '1650k',
-      '-hls_init_time', '9',
+      '-hls_init_time', init_segment_len,
       '-hls_time', segment_len,
       '-hls_flags', 'single_file',
       '-hls_playlist_type', 'vod'
