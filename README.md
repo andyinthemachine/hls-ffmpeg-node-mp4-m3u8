@@ -17,7 +17,7 @@
 
 ##### Segments for each bitrate are bundled into a single .ts file using byte ranges
 
-#####  Extracts audio to separate track in HLD manifest.
+#####  Extracts audio to separate track in HLS manifest.
 
 #####  Provide segment length (2-30 sec) in second command line parameter.
 
