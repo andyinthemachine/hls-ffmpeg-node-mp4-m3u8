@@ -5,24 +5,32 @@ require('dotenv').config();
 var fs = require('fs');
 var path = require('path');
 var ffmpeg = require('fluent-ffmpeg');
-var ffprobe = require('fluent-ffmpeg');
 
 const input_file = process.argv[2];
 const segment_len = process.argv[3];
 const base_video_name = path.basename(input_file, '.mp4');
 
+
 new_line = () => console.log("\n");
 
 
+if ((input_file) && ((parseInt(segment_len) > 0) && (parseInt(segment_len) <= 30))) {
 
-// create sub-directory for assets
-if ((input_file) && (segment_len === '5' || segment_len === '6')) {
+  ffmpeg.ffprobe(input_file, function (err, metadata) {
+    if (err) return console.log(err);
+
+    // set initial segment length as ((dur % seg_len) + seg_len) to prevent segments less than segment_len
+    let video_duration = Math.trunc(metadata.streams[0].duration)
+    let init_segment_len = ((video_duration % parseInt(segment_len)) + parseInt(segment_len)).toString();
+
+  // create sub-directory for assets
   try {
     if (!fs.existsSync(base_video_name)) {
       fs.mkdirSync(base_video_name)
     }
   } catch (err) {
-    console.error(err)
+    console.error(err);
+    return (false);
   }
 
   ffmpeg(input_file)
@@ -46,7 +54,7 @@ if ((input_file) && (segment_len === '5' || segment_len === '6')) {
       '-hls_init_time', '9',
       '-hls_time', segment_len,
       '-hls_flags', 'single_file',
-      '-hls_playlist_type', 'vod',
+      '-hls_playlist_type', 'vod'
     )
     // bitrate res_w res_h  maxrate bufsize
     // (4500, 1280, 720, 4814, 6750);
@@ -68,7 +76,7 @@ if ((input_file) && (segment_len === '5' || segment_len === '6')) {
       '-hls_init_time', '9',
       '-hls_time', segment_len,
       '-hls_flags', 'single_file',
-      '-hls_playlist_type', 'vod',
+      '-hls_playlist_type', 'vod'
     )
     // bitrate res_w res_h  maxrate bufsize
     // (3000, 1280, 720, 3210, 4500);
@@ -90,7 +98,7 @@ if ((input_file) && (segment_len === '5' || segment_len === '6')) {
       '-hls_init_time', '9',
       '-hls_time', segment_len,
       '-hls_flags', 'single_file',
-      '-hls_playlist_type', 'vod',
+      '-hls_playlist_type', 'vod'
     )
     // bitrate res_w res_h  maxrate bufsize
     // (2000, 960, 540, 2140, 3000);
@@ -112,7 +120,7 @@ if ((input_file) && (segment_len === '5' || segment_len === '6')) {
       '-hls_init_time', '9',
       '-hls_time', segment_len,
       '-hls_flags', 'single_file',
-      '-hls_playlist_type', 'vod',
+      '-hls_playlist_type', 'vod'
     )
     // bitrate res_w res_h  maxrate bufsize
     // (1100, 768, 432, 1176, 1650);
@@ -134,7 +142,7 @@ if ((input_file) && (segment_len === '5' || segment_len === '6')) {
       '-hls_init_time', '9',
       '-hls_time', segment_len,
       '-hls_flags', 'single_file',
-      '-hls_playlist_type', 'vod',
+      '-hls_playlist_type', 'vod'
     )
 
     .on('start', function (commandLine) {
@@ -172,10 +180,11 @@ if ((input_file) && (segment_len === '5' || segment_len === '6')) {
       });
       return (true);
     })
-    .run();
+    .run();  
+  });
 }
 else {
-  console.log("Please specify input file and and segment length of 5/6 seconds");
+  console.log("Please specify input file and and segment length (1-30 sec)");
   console.log("eg: node mp4-hls tos-teaser 6 <ret>");
 }
 
@@ -183,24 +192,6 @@ new_line();
 
 
 
-
-// ffmpeg.ffprobe(input_file, function (err, metadata) {
-//   if (err) return console.log(err);
-//    console.dir(metadata);
-// });
-
-// master_playlist_str += '#EXT-X-MEDIA:TYPE=AUDIO,AUTOSELECT=NO,DEFAULT=NO\n';
-// master_playlist_str += `hls-${base_video_name}-audio.m3u8\n`
-
-
-  // extract audio to separate track
-    // .output(`${base_video_name}/hls-${base_video_name}-audio.m3u8`)
-    // .noVideo()
-    // .outputOptions(
-    //   '-hls_time', '6',
-    //   '-hls_flags', 'single_file'
-    //   '-hls_playlist_type', 'vod',
-    // )
 
 
 
