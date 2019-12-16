@@ -31,7 +31,7 @@
 
 ##### Creates sub-directory underneath script root with base name of video for created files
 
-##### Files created: .ts and .m3u8 for each bitrate, and master.m3u8
+##### Files created: .ts and .m3u8 for each bitrate and audio-only, and master.m3u8
 
 
 
